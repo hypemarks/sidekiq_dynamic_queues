@@ -1,0 +1,48 @@
+<header class="row">
+  <div class="col-sm-5">
+    <h3>Dynamic Queues</h3>
+  </div>
+</header>
+
+<form action="<%= root_path %>dynamic_queues" method="post">
+  <%= csrf_tag %>
+  <table class="table table-hover table-bordered table-striped table-white dynamic_queues">
+    <thead>
+      <th><%= t("Queue") %></th>
+      <th><%= t("Percentage") %></th>
+      <th><%= t("Actions") %></th>
+    </thead>
+    <tbody>
+      <% @dynamic_queues.each_with_index do |data, i| %>
+        <tr class="line">
+          <td>
+            <input type="text" name="dynamic_queues[][name]" value="<%= data[0] %>">
+          </td>
+          <td>
+            <input type="number" min="0" max="100" name="dynamic_queues[][percentage]" value="<%= data[1] %>">
+          </td>
+          <td>
+            <button class="btn btn-danger btn-xs delete"><%= t("Delete") %></button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <button class="btn add"><%= t("Add") %></button>
+  <input type="submit" class="btn btn-danger" value="<%= t("Save") %>">
+</form>
+
+<script>
+  jQuery(function($) {
+    $(document).on("click", "button.add", function(e) {
+      e.preventDefault();
+      $('<tr class="line"><td><input type="text" name="dynamic_queues[][name]" value=""></td><td><input type="number" min="0" max="100" name="dynamic_queues[][percentage]" value=""></td><td><button class="btn btn-danger btn-xs delete"><%= t("Delete") %></button></td></tr>').appendTo($("table.dynamic_queues"));
+    });
+    $(document).on("click", "button.delete", function(e) {
+      e.preventDefault();
+      $(this).parents("tr").remove();
+    });
+
+  });
+</script>
