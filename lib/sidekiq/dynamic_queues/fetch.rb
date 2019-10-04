@@ -28,7 +28,6 @@ module Sidekiq
         return unless index
 
         dynamic_queues = Sidekiq.redis { |r| r.hgetall("dynamic_queues") }
-        return if dynamic_queues.size == 0
 
         Sidekiq::Queue.all
                       .map(&:name)
