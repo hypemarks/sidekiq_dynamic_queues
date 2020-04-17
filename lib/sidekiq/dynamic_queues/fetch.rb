@@ -32,7 +32,7 @@ module Sidekiq
         Sidekiq::Queue.all
                       .map(&:name)
                       .select do |name|
-                                percentage = (dynamic_queues[name] || 100).to_i
+                                percentage = (dynamic_queues[name] || Array(dynamic_queues.find { |k, _| Regexp.new("^#{k}$") =~ name })[1] || 100).to_f
                                 percentage > 0 ? index <= (percentage / 100.0 * process_set.size).ceil : nil
                               end
       end

@@ -13,7 +13,11 @@ module Sidekiq
           Sidekiq.redis do |r|
             r.multi do
               r.del("dynamic_queues")
-              Array(params["dynamic_queues"]).each { |v| r.hset("dynamic_queues", v["name"], v["percentage"]) }
+
+              Array(params["dynamic_queues"]).each do |v|
+                name = v["name"].strip
+                r.hset("dynamic_queues", name, v["percentage"].to_f) unless name.empty?
+              end
             end
           end
 

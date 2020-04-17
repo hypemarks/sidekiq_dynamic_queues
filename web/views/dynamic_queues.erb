@@ -1,5 +1,5 @@
 <header class="row">
-  <div class="col-sm-5">
+  <div class="col-sm-12">
     <h3>Dynamic Queues</h3>
   </div>
 </header>
@@ -13,13 +13,13 @@
       <th><%= t("Actions") %></th>
     </thead>
     <tbody>
-      <% @dynamic_queues.each_with_index do |data, i| %>
+      <% @dynamic_queues.sort { |a, b| a <=> b }.each do |data| %>
         <tr class="line">
           <td>
             <input type="text" name="dynamic_queues[][name]" value="<%= data[0] %>">
           </td>
           <td>
-            <input type="number" min="0" max="100" name="dynamic_queues[][percentage]" value="<%= data[1] %>">
+            <input type="number" min="0" max="100" step="0.5" name="dynamic_queues[][percentage]" value="<%= data[1] %>">
           </td>
           <td>
             <button class="btn btn-danger btn-xs delete"><%= t("Delete") %></button>
